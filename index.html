@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placify</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            padding: 8px 15px;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+        
+        .navbar-dark .navbar-nav .nav-link:hover,
+        .navbar-dark .navbar-nav .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .carousel {
+            margin-top: -20px;
+        }
+        
+        .carousel-item {
+            height: 70vh;
+            min-height: 400px;
+        }
+        
+        .carousel-item img {
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        
+        .carousel-caption {
+            bottom: 30%;
+            text-align: left;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+        
+        .carousel-caption h5 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        .carousel-caption p {
+            font-size: 1.1rem;
+        }
+        
+        .video-container {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .about-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-card .card-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contact-info li {
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .contact-info i {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-caption {
+                bottom: 20%;
+            }
+            
+            .carousel-caption h5 {
+                font-size: 1.5rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 0.9rem;
+            }
+        }
+
+        #bot1{
+            position: fixed;
+            left: 50px;
+            bottom: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                
+                <div>
+                    <h4 class="mb-0">Placify</h4>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about"><i class="fas fa-info-circle me-1"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact"><i class="fas fa-address-card me-1"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/studentlogin"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Image Carousel -->
+    <div id="collegeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#collegeCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#collegeCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#collegeCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://iccams-presidencyuniversity.netlify.app/assets/img/venue-gallery/1.jpeg" class="d-block w-100" alt="College Campus">
+                <div class="carousel-caption">
+                    <h5>WELCOME TO PLACIFY</h5>
+                    <p>Placement made simple</p>
+                    <a href="#about" class="btn btn-danger mt-3">Learn More</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" class="d-block w-100" alt="College Library">
+                <div class="carousel-caption">
+                    <h5>Secure Login</h5>
+                    <p>Multi-Factor Authentication (MFA),
+                        Your data is safe with email/OTP verification.</p>
+                    <a href="#about" class="btn btn-danger mt-3">Explore Facilities</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="d-block w-100" alt="College Labs">
+                <div class="carousel-caption">
+                    <h5>Placement Stats</h5>
+                    <p>Access live statistics and analytics,
+                        View selection trends, top recruiters, and your progress.</p>
+                    <a href="#about" class="btn btn-danger mt-3">View Placements</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#collegeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#collegeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Introduction Video -->
+    <div class="video-container">
+        <div class="container">
+           <!-- <h2 class="section-title text-center">Take a Virtual Campus Tour</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="ratio ratio-16x9 shadow-lg rounded-3 overflow-hidden">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/kK8tbWXs9Qo?si=nMFMGE6bVsZqOgvI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">About Placify</h2>
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <p>At Placify, we believe every student deserves a smooth and empowering transition from campus to career.
+                        Our platform is designed to simplify the placement process by providing students, faculty, and recruiters with powerful, user-friendly tools.
+                        
+                        From real-time eligibility checking to seamless application tracking, we aim to bridge the gap between student potential and industry opportunities. With advanced features, robust security, and a student-first mindset, Placify is here to fuel your journey toward success.</p>    
+                </div>
+            </div>
+
+            <h2 class="section-title text-center">Why Choose Placify?</h2>
+            <div class="row mb-5">
+                <div class="col-lg-12"><center>
+                    <p>Student-First Design: Built specifically for students to make placement easy, transparent, and accessible.<br>
+                    Smart Eligibility Checking: Instantly see where you qualify based on your CGPA, skills, internships, and certifications.<br>
+                    Seamless Company Management: Organized placement drives and better communication with recruiters.<br>
+                    Real-Time Updates: Stay informed about upcoming placements, deadlines, and eligibility changes.<br>
+                    Secure and Reliable: Multi-Factor Authentication (MFA) ensures your data stays safe.<br>
+                    Insightful Dashboards: Personalized dashboards for students, faculty, and coordinators.<br>
+                    Fast and Easy to Use: Lightweight, responsive, and designed for a stress-free experience.<br>
+                    Supportive Community: Continuous support to help students achieve placement success.</p></center>
+                </div>
+            </div>
+
+            <h2 class="section-title text-center">Our Services:</h2>
+            <div class="row mb-5">
+                <div class="col-lg-12"><center>
+                    <p>Profile Management: Students create and manage placement-ready profiles; admins manage student records.<br>
+                        Eligibility Filtering: Students check real-time eligibility for placements based on CGPA and skills, admins filter students for company shortlisting.<br>
+                        Placement Applications: Students apply to companies and track their applications; admins oversee application statuses.<br>
+                        Company & Drive Management: Admins manage company profiles, job roles, and placement drives; students apply for opportunities.<br>
+                        Analytics Dashboard: Both students and admins access real-time statistics and insights into placements, applications, and results.<br>
+                        Real-Time Updates: Students receive alerts on upcoming placements and deadlines; admins send notifications to students.<br>
+                        Secure Access: Multi-factor authentication ensures secure login and data protection for both students and admins.</p></center>
+
+                </div>
+            </div>
+            <!--
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="about-card card">
+                        <div class="card-body text-center p-4">
+                            <div class="card-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h4 class="card-title">Academic Programs</h4>
+                            <p class="card-text">We offer 8 UG programs, 6 PG programs, and PhD in all departments with industry-aligned curriculum and choice-based credit system.</p>
+                            <a href="#" class="btn btn-outline-primary">View Programs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="about-card card">
+                        <div class="card-body text-center p-4">
+                            <div class="card-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <h4 class="card-title">Research & Innovation</h4>
+                            <p class="card-text">With 15+ research centers, 50+ patents, and ₹5 crore annual research funding, we foster innovation and entrepreneurship.</p>
+                            <a href="#" class="btn btn-outline-primary">Research Areas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="about-card card">
+                        <div class="card-body text-center p-4">
+                            <div class="card-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h4 class="card-title">Placements</h4>
+                            <p class="card-text">90% placement record with 200+ recruiters including Microsoft, Bosch, Infosys, and L&T offering average package of ₹7.5 LPA.</p>
+                            <a href="#" class="btn btn-outline-primary">Placement Stats</a>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Contact Us</h2>
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <h3 class="mb-4"><i class="fas fa-map-marker-alt text-primary me-2"></i> Reach Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-university"></i>
+                            <strong>Placify</strong><br>
+                           <!-- Doddakallasandra, Off Kanakapura Road, Next to Gokulam Apartment, Bangalore - 560 062
+                        --></li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <strong>Phone:</strong> +91 7624940567, +91 9353813218 .
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <strong>Email:</strong> placifya@gmail.com
+                        </li>
+                     <!--  <li>
+                            <i class="fas fa-globe"></i>
+                            <strong>Website:</strong> https://cityengineeringcollege.ac.in/
+                        </li>--> 
+                    </ul>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="mb-4"><i class="fas fa-paper-plane text-primary me-2"></i> Send Us a Message</h3>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+         <!-- <div class="row mt-5">
+                <div class="col-12">
+                    <div class="ratio ratio-16x9 shadow-sm rounded-3 overflow-hidden">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.27843512827!2d77.54834637507507!3d12.889809287418064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3eecdc883cc1%3A0x1d44e022ac75925a!2sCity%20Engineering%20College!5e0!3m2!1sen!2sin!4v1745825300234!5m2!1sen!2sin" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>-->   
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="mb-4">About Placify</h5>
+                    <p>At Placify, we believe every student deserves a smooth and empowering transition from campus to career.
+                        Our platform is designed to simplify the placement process by providing students, faculty, and recruiters with powerful, user-friendly tools.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Placements</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Academics</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="mb-4">Departments</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Computer Science</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Mechanical</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Electronics</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Civil</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Information Science</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Newsletter</h5>
+                    <p>Subscribe to our newsletter for the latest updates and events.</p>
+                    <form class="mt-3">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                            <button class="btn btn-danger" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Enable carousel auto-cycling
+        var myCarousel = document.querySelector('#collegeCarousel')
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 5000,
+            wrap: true
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
